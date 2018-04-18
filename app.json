@@ -2,9 +2,9 @@
   "expo": {
     "sdkVersion": "21.0.0",
     "name": "IgniteSTEM",
-    "icon": "icon.png",
+    "icon": "TigerBites.jpg",
     "notification" : {
-    	"icon": "icon.png"
+    	"icon": "TigerBites.jpg"
     }
   }
 }
