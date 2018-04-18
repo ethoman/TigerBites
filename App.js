@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import {ActivityIndicator, Alert, Text, View, Button, StyleSheet, Dimensions, StatusBar, Platform, Image, ScrollView, ListView, TouchableOpacity, AsyncStorage } from 'react-native';
+import {ActivityIndicator, Alert, Text, View, List, ListItem, Button, StyleSheet, Dimensions, StatusBar, Platform, Image, ScrollView, ListView, TouchableOpacity, AsyncStorage } from 'react-native';
 import { TabNavigator, StackNavigator, DrawerNavigator, NavigationActions} from 'react-navigation';
 import MyHomeScreen from './MyHomeScreen.js';
 import ContactUs from './ContactUs.js';
 import Schedule from './Schedule.js';
 import MyAgenda from './MyAgenda.js';
+import Menus from './Menus.js';
 import { Icon } from 'react-native-elements';
 
 var url = 'https://vast-chamber-81818.herokuapp.com/food/all/';
+var menuURL = 'https://vast-chamber-81818.herokuapp.com/food/today/';
 
 class Scheduler extends React.Component {
     constructor() {
@@ -16,13 +18,15 @@ class Scheduler extends React.Component {
         loaded: false,
         buttons: [],
         agenda: [],
-        currentScreen: 'Home'
+        dataLoad: true,
+        menu: {}
       };
-      this.getKey(18);
+      this.getKey();
+      this.fetchMenu();
       this.fetchData();
    }
 
-   async getKey(length) {
+   async getKey() {
     try {
       const value = await AsyncStorage.getItem('@MySuperStore:key');
       if (value == null) {
@@ -31,7 +35,7 @@ class Scheduler extends React.Component {
       }
       this.setState({agenda: JSON.parse(value)});
     } catch (error) {
-      console.log(error);
+      this.setState({dataLoad: false});
     }
 
   }
@@ -50,11 +54,13 @@ class Scheduler extends React.Component {
       .then((responseData) => {
           var length = responseData.length;
           var buttons = [];
-          var temp = [];
-          for(var i = 0; i< length; i++) {
-            temp.push(false);
+          if(this.state.dataLoad==false) {
+            var temp = [];
+            for(var i = 0; i< length; i++) {
+              temp.push(false);
+            }
+            this.setState({agenda: temp});
           }
-          this.setState({agenda: temp});
           //console.log(JSON.stringify(this.state.agenda));
           for (var i = 0; i < length; i++) {
               buttons.push({
@@ -69,6 +75,18 @@ class Scheduler extends React.Component {
           loaded: true,
           buttons,
           currentScreen: 'Home',
+        });
+      })
+      .done();
+  }
+
+  fetchMenu() {
+    fetch(menuURL)
+      .then((response) => response.json())
+      .then((responseData) => {
+        console.log(responseData);
+        this.setState({
+          menu: responseData
         });
       })
       .done();
@@ -113,7 +131,7 @@ class Scheduler extends React.Component {
       }
       
     return (
-      <AppNavigator screenProps={{ initialState:this.state.buttons, callbackParent:(newState, rowID, Screen) => this.onChildChanged(newState, rowID, Screen)}} />
+      <AppNavigator screenProps={{ initialState:this.state.buttons, callbackParent:(newState, rowID, Screen) => this.onChildChanged(newState, rowID, Screen), menu:this.state.menu}} />
     );
   }
 }
@@ -163,9 +181,15 @@ const SimpleTabs = TabNavigator({
 }
 });
 
+
+
+
 const MyApp = DrawerNavigator({
   Home: {
     screen: MyHomeScreen,
+  },
+  Menu: {
+    screen: Menus,
   },
   Food: {
     screen: SimpleTabs,
