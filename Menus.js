@@ -18,7 +18,7 @@ class Menu extends React.Component {
 
 const Menus = TabNavigator({
   Butler: {
-    screen: props=> <Menu {...props.screenProps.menu.Butler}/>
+    screen: props=> <Menu {...props.screenProps.menu['Wu / Wilcox']}/>
   },
   CJL: {
     screen: props=> <Menu {...props.screenProps.menu.CJL}/>
