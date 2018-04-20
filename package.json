@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^6.3.1",
-    "auth0-js": "^9.0.2",
+    "auth0-js": "^9.3.0",
     "expo": "21.0.0",
     "moment": "^2.22.0",
     "react": "16.0.0-alpha.12",
