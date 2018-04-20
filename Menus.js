@@ -3,6 +3,10 @@ import {ActivityIndicator, Alert, Text, View, List, ListItem, Button, StyleSheet
 import { TabNavigator, StackNavigator, DrawerNavigator, NavigationActions} from 'react-navigation';
 
 class Menu extends React.Component {
+  static navigationOptions = {
+        tabBarLabel: 'Dining Hall Menu',
+        headerTitle: 'My Favorite Foods',
+    };
   render () {
     return(
         <ScrollView>
