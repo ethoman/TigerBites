@@ -20,11 +20,10 @@ class Profile extends React.Component {
 
 
   render() {
-    console.log(this.props.navigation.state.params);
   	const {name, type, calorie, protein, fat, carbs, rowID, button, pic, dhall, meal} = this.props.navigation.state.params.rowData;
     //console.log(picture);
     return (
-    <View style = {{backgroundColor: 'white', flex:1}}>
+    <View style = {{backgroundColor: 'white', flex:1, paddingTop:20}}>
     <View style={{flexDirection:'row', justifyContent:'flex-start'}}>
     <MenuButton navigation={this.props.navigation}/>
     <Text style = {styles.name}>{name} </Text>
@@ -38,10 +37,10 @@ class Profile extends React.Component {
 
 
             <View style = {styles.rightContainer}>
-              <Text style = {[styles.time, {marginBottom: Dimensions.get('window').height/8}]}>{type} </Text>
+              <Text style = {[styles.time, {marginBottom: Dimensions.get('window').height/15}]}>{type} </Text>
               <View>
               <Text style = {styles.time}>Dining Hall: {dhall} </Text>
-              <Text style = {[styles.time, {marginTop: 10, marginBottom: Dimensions.get('window').height/8}]}>Meal: {meal} </Text>
+              <Text style = {[styles.time, {marginTop: 10, marginBottom: Dimensions.get('window').height/15}]}>Meal: {meal} </Text>
               </View>
 
               <View style = {{flexDirection: 'row', justifyContent:'center'}}>
