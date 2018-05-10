@@ -44,7 +44,6 @@ class AppSource extends React.Component {
   async fetchData() {
     const res = await fetch(url)
     const responseData = await res.json()
-    console.log(responseData);
           var length = responseData.length;
           var buttons = [];
           for (var i = 0; i < length; i++) {

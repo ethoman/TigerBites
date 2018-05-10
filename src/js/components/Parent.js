@@ -6,7 +6,7 @@ import ContactUs from './ContactUs.js';
 import Schedule from './Schedule.js';
 import MyAgenda from './MyAgenda.js';
 import Profiles from './Profiles.js';
-import Menus from './Menus.js';
+import Menu from './Menus.js';
 import { Icon } from 'react-native-elements';
 
 
@@ -127,12 +127,86 @@ const Profiler = new StackNavigator({
   }
 );
 
+
+const Menus = TabNavigator({
+  Butler: {
+    screen: props=> <Menu {...props.screenProps.menu['Wu / Wilcox']}/>
+  },
+  CJL: {
+    screen: props=> <Menu {...props.screenProps.menu.CJL}/>
+  },
+  Whitman: {
+    screen: props=> <Menu {...props.screenProps.menu.Whitman}/>
+  },
+  RoMa: {
+    screen: props=> <Menu {...props.screenProps.menu['Ro / Ma']}/>
+  },
+  Forbes: {
+    screen: props=> <Menu {...props.screenProps.menu.Forbes}/>
+  },
+  Grad: {
+    screen: props=> <Menu {...props.screenProps.menu.Grad}/>
+  },
+},
+  
+{
+  title: 'Scheduler',
+  tabBarPosition: 'top',
+  animationEnabled: true,
+  navigationOptions:{
+  headerTitle: 'Today\'s Menus',
+  },
+  swipeEnabled: true,
+  tabBarOptions: {
+      showIcon: false,
+      activeTintColor: 'blue',
+      inactiveTintColor:'gray',
+      style:{
+        padding: 0,
+        margin: 0,
+        backgroundColor: 'white',
+      },
+  tabStyle: {
+    padding: 0,
+    margin: 0,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+   labelStyle: {
+      justifyContent: 'center',
+      textAlign: 'center',
+      fontSize: 15,
+      paddingTop: 5,
+      paddingBottom: 5,
+      textAlignVertical: 'center'
+   },
+  indicatorStyle: {
+      backgroundColor: 'white'
+  }  
+}
+});
+
+const theMenus = new StackNavigator({
+  Menu: {
+    screen: Menus,
+  },
+  Profile: {
+    screen: Profiles,
+  },
+  },
+  {
+    headerMode: 'none',
+    mode: 'modal',
+  }
+);
+
 const MyApp = DrawerNavigator({
   Main: {
     screen: MyHomeScreen,
   },
   Menu: {
-    screen: Menus,
+    screen: theMenus,
   },
   Food: {
     screen: Profiler,
@@ -142,6 +216,7 @@ const MyApp = DrawerNavigator({
   },
   },
 );
+
 
 const MenuButton = (props) => {
   return (

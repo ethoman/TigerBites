@@ -1,17 +1,28 @@
 import React, { PureComponent } from 'react';
-import {Alert, Text, View, TouchableOpacity, Dimensions, Button, Platform, Image, ScrollView, StyleSheet, TouchableHighlight } from 'react-native';
-import {StackNavigator} from 'react-navigation';
+import {Alert, Text, View, TouchableOpacity, Linking, Dimensions, Button, Platform, Image, ScrollView, StyleSheet, TouchableHighlight } from 'react-native';
+import {StackNavigator, NavigationActions} from 'react-navigation';
 import { toggleTodo } from '../actions/index.js';
 import { connect } from 'react-redux';
 import { Icon } from 'react-native-elements';
 
 const MenuButton = (props) => {
   return (
-    <TouchableOpacity onPress={() => {props.navigation.goBack()}} style={{marginLeft:10}}>
+    <TouchableOpacity onPress={() => {props.navigation.dispatch(NavigationActions.back(props.navigation.state.key))}} style={{marginLeft:10}}>
       <Icon name="arrow-back" size={30} style ={{color:'#00F', marginLeft:5}} />
     </TouchableOpacity>
   );
 };
+
+const LinkButton = (props) => {
+  return (
+    <TouchableOpacity onPress={()=>{ Linking.openURL(props.link)}} style={{marginLeft:10}}>
+      <Icon type={props.type} name={props.name} size={60} style ={{color:'#00F', marginLeft:5}} />
+    </TouchableOpacity>
+  );
+};
+
+const nutritionalLink = 'https://www.myfitnesspal.com/';
+const healthyEating = 'https://www.choosemyplate.gov/';
 
 class Profile extends React.Component {
   static navigationOptions = {
@@ -20,30 +31,31 @@ class Profile extends React.Component {
 
 
   render() {
-  	const {name, type, calorie, protein, fat, carbs, rowID, button, pic, dhall, meal} = this.props.navigation.state.params.rowData;
+  	const {name, type, calorie, protein, fat, carbs, rowID, button, pic, dhall, meal, ingredients, allergens} = this.props.navigation.state.params.rowData;
     //console.log(picture);
     return (
-    <View style = {{backgroundColor: 'white', flex:1, paddingTop:20}}>
+    <View style = {{backgroundColor: 'white', paddingTop:20, flex:1}}>
     <View style={{flexDirection:'row', justifyContent:'flex-start'}}>
     <MenuButton navigation={this.props.navigation}/>
     <Text style = {styles.name}>{name} </Text>
     </View>
 
-    <View style={{flexDirection:'column', alignItems:'center'}}>
+    <ScrollView contentContainerStyle={{flexDirection:'column', alignItems:'center'}}>
     <Image
             source={this.props.navigation.state.params.pic}
             style={styles.picture}
             resizeMode={'contain'}/>
 
-
             <View style = {styles.rightContainer}>
-              <Text style = {[styles.time, {marginBottom: Dimensions.get('window').height/15}]}>{type} </Text>
-              <View>
-              <Text style = {styles.time}>Dining Hall: {dhall} </Text>
-              <Text style = {[styles.time, {marginTop: 10, marginBottom: Dimensions.get('window').height/15}]}>Meal: {meal} </Text>
+              <Text style = {{color: '#A5A5A5', marginBottom: Dimensions.get('window').height/15}}>{type} </Text>
+              <View style={{}}>
+              <Text style = {styles.info}>Dining Hall: {dhall} </Text>
+              <Text style = {styles.info}>Ingredients: {ingredients} </Text>
+              <Text style = {styles.info}>Allergens: {allergens} </Text>
+              <Text style = {[styles.info, {marginBottom: 20}]}>Meal: {meal} </Text>
               </View>
 
-              <View style = {{flexDirection: 'row', justifyContent:'center'}}>
+              <View style = {{flexDirection: 'row'}}>
               <View style = {{flexDirection: 'column', flex:1, marginLeft:20}}>
                 <Text style = {styles.time}>Calories </Text>
                 <Text style = {styles.time}>{calorie}</Text>
@@ -62,8 +74,15 @@ class Profile extends React.Component {
               </View>
               </View>
 
+              <View style={{flexDirection: 'row', alignItems: 'center', marginTop:20, marginBottom:40}}>
+              <View style={{marginRight:Dimensions.get('window').width/4}}>
+              <LinkButton link={nutritionalLink} name={'info'}/>
+              </View>
+
+              <LinkButton link={healthyEating} name={'food-apple'} type={'material-community'}/>
+              </View>
             </View>
-      </View>
+      </ScrollView>
       </View>
     );
   }
@@ -89,9 +108,18 @@ event: {
     flex:1
 
   },
+  info: {
+    fontSize:15,
+    color: 'gray',
+    fontWeight: 'bold',
+    marginBottom: 10,
+    marginLeft: 20,
+    marginRight: 10
+  },
   time: {
     fontSize:15,
-    color: '#A5A5A5',
+    color: 'black',
+    fontWeight: 'bold',
   },
   rightContainer: {
     alignItems: 'center',

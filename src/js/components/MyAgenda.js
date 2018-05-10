@@ -19,11 +19,7 @@ class MyAgenda extends React.Component {
           No Foods Selected! Tap Food To Add Reminders and Never Miss Whitman Chicken Pot Pie Again! 
         </Text>
       </View>
-
       <Data personalSchedule = {0}/>
-        
-
-      
     </View>
     );
   }

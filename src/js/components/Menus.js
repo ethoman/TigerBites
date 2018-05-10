@@ -1,14 +1,51 @@
 import React, { Component } from 'react';
-import {ActivityIndicator, Alert, Text, View, List, ListItem, Button, StyleSheet, Dimensions, StatusBar, Platform, Image, ScrollView, ListView, TouchableOpacity, AsyncStorage, FlatList} from 'react-native';
+import {ActivityIndicator, AsyncStorage, Text, View, List, ListItem, Button, StyleSheet, Dimensions, StatusBar, Platform, Image, ScrollView, ListView, TouchableOpacity, FlatList} from 'react-native';
 import { TabNavigator, StackNavigator, DrawerNavigator, NavigationActions} from 'react-navigation';
+import { connect } from "react-redux";
+import { toggleTodo } from '../actions/index.js';
+import Events from './events.js';
+import { Notifications, Permissions } from 'expo';
+
+
+const mapStateToProps = (state) => {
+  return { articles: state };
+};
 
 class Menu extends React.Component {
-  static navigationOptions = {
-        tabBarLabel: 'Dining Hall Menu',
-        headerTitle: 'My Favorite Foods',
-    };
-
   
+  picture(name) {
+    var picture;
+    const itemData = name.toUpperCase();
+    const meat = 'Meat'.toUpperCase();
+    const vegan = 'vegan'.toUpperCase();
+    const vegetarian = 'vegetarian'.toUpperCase();
+    const sides = 'side'.toUpperCase();
+    const salad = 'salad'.toUpperCase();
+    const soup = 'soup'.toUpperCase();
+    const entree = 'entree'.toUpperCase();
+    if(itemData.indexOf(meat) > -1)
+      picture = require('./meat.jpeg');
+
+    else if(itemData.indexOf(vegan) > -1)
+      picture = require('./vegan.jpg');
+
+    else if(itemData.indexOf(vegetarian) > -1)
+      picture = require('./vegetarian.jpg');
+
+    else if(itemData.indexOf(salad) > -1)
+      picture = require('./salad.jpg');
+
+    else if(itemData.indexOf(sides) > -1)
+      picture = require('./sides.jpg');
+
+    else if(itemData.indexOf(soup) > -1)
+      picture = require('./soup.jpg');
+
+    else if(itemData.indexOf(entree) > -1)
+      picture = require('./entree.jpg');
+
+    return picture;
+  }
   
   notEmpty(array) {
     if (array === undefined) return false;
@@ -17,7 +54,11 @@ class Menu extends React.Component {
 
   renderCategories(array) {
     if (array === undefined) return;
-    else return array.map(item => <Text key={item}>{item}</Text>);
+    else return Object.values(array).map(item => 
+      {
+        var picture = this.picture(this.props.articles.todos[item].type);
+        return <Events pic={picture} key={item} rowData={this.props.articles.todos[item]}/>
+      });
   }
 
   renderMenu(array, tag) 
@@ -36,7 +77,9 @@ class Menu extends React.Component {
     return(
 
         <ScrollView>
-
+        <View style={{position: 'absolute', top: 20, left: 0, right: 0, bottom: 0, alignItems: 'center'}}>
+        <Text>No Food to Display!</Text>
+        </View>
         {this.renderMenu(this.props['-- Main Entree --'], <Text>Main Entrée</Text>)}
         {this.renderMenu(this.props['-- Entrees --'], <Text>Entrées</Text>)}
         {this.renderMenu(this.props['-- Vegetarian & Vegan Entree --'], <Text>Vegetarian & Vegan Entrée</Text>)}
@@ -46,7 +89,11 @@ class Menu extends React.Component {
         {this.renderMenu(this.props['-- Soup of the Day --'], <Text>Soup</Text>)}
         {this.renderMenu(this.props['-- Action Station --'], <Text>Action Station</Text>)}
         {this.renderMenu(this.props['-- Entree Salad --'], <Text>Entrée Salad</Text>)}
+        {this.renderMenu(this.props['-- Entree Salads --'], <Text>Entrée Salads</Text>)}
         {this.renderMenu(this.props['-- Salads --'], <Text>Salad</Text>)}
+        {this.renderMenu(this.props['-- Pasta Station --'], <Text>Pasta Station</Text>)}
+        {this.renderMenu(this.props['-- Fruit --'], <Text>Fruit</Text>)}
+        {this.renderMenu(this.props['-- Vegan Salads --'], <Text>Vegan Salads</Text>)}
         {this.renderMenu(this.props['-- Starches --'], <Text>Starches</Text>)}
         {this.renderMenu(this.props['-- Sandwiches --'], <Text>Sandwiches</Text>)}
         {this.renderMenu(this.props['-- From our Bakeshop --'], <Text>From our Bakeshop</Text>)}
@@ -62,62 +109,6 @@ class Menu extends React.Component {
 }
 }
 
-const Menus = TabNavigator({
-  Butler: {
-    screen: props=> <Menu {...props.screenProps.menu['Wu / Wilcox']}/>
-  },
-  CJL: {
-    screen: props=> <Menu {...props.screenProps.menu.CJL}/>
-  },
-  Whitman: {
-    screen: props=> <Menu {...props.screenProps.menu.Whitman}/>
-  },
-  RoMa: {
-    screen: props=> <Menu {...props.screenProps.menu['Ro / Ma']}/>
-  },
-  Forbes: {
-    screen: props=> <Menu {...props.screenProps.menu.Forbes}/>
-  },
-  Grad: {
-    screen: props=> <Menu {...props.screenProps.menu.Grad}/>
-  },
-},
-  
-{
-  title: 'Scheduler',
-  tabBarPosition: 'top',
-  animationEnabled: true,
-  swipeEnabled: true,
-  tabBarOptions: {
-      showIcon: false,
-      activeTintColor: 'blue',
-      inactiveTintColor:'gray',
-      style:{
-        padding: 0,
-        margin: 0,
-        backgroundColor: 'white',
-      },
-  tabStyle: {
-    padding: 0,
-    margin: 0,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-   labelStyle: {
-      justifyContent: 'center',
-      textAlign: 'center',
-      fontSize: 15,
-      paddingTop: 5,
-      paddingBottom: 5,
-      textAlignVertical: 'center'
-   },
-  indicatorStyle: {
-      backgroundColor: 'white'
-  }  
-}
-});
-
 
 const styles = StyleSheet.create({
   category : {
@@ -127,9 +118,9 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     backgroundColor: 'lightgray',
     textAlign: 'center'
-  }
-
-
+  },
 });
 
-export default Menus;
+export default connect(mapStateToProps)(Menu);
+
+

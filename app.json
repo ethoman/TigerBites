@@ -2,9 +2,9 @@
   "expo": {
     "sdkVersion": "21.0.0",
     "name": "TigerBites",
-    "icon": "TigerBites.jpg",
+    "icon": "TigerBites.png",
     "notification" : {
-    	"icon": "TigerBites.jpg"
+    	"icon": "TigerBites.png"
     }
   }
 }

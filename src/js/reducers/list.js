@@ -12,7 +12,9 @@ const todo = (state, action) => {
         fat:action.id.fat,
         button:action.id.button,
         dhall:action.id.dhall,
-        meal:action.id.meal
+        meal:action.id.meal,
+        ingredients:action.id.ingredients,
+        allergens:action.id.allergens
       }
     case 'TOGGLE_TODO':
       //console.log(action);
@@ -40,7 +42,6 @@ const todos = (state = [], action) => {
       return state.map(t =>
         todo(t, action))
     case 'FILTER_TODO':
-      console.log(action);
       return state.filter(function(item){
          const itemData = item.name.toUpperCase()
          const textData = action.id.toUpperCase()
