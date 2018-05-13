@@ -5,6 +5,15 @@
     "icon": "TigerBites.png",
     "notification" : {
     	"icon": "TigerBites.png"
+    },
+    "ios": {
+      "bundleIdentifier": "com.TigerBites.TigerBitesApp",
+      "supportsTablet": false,
+      "buildNumber": "1"
+    },
+    "android": {
+      "package": "com.TigerBites.TigerBitesApp",
+      "versionCode": 1
     }
   }
 }
