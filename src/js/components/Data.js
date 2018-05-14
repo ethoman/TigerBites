@@ -12,6 +12,7 @@ const mapStateToProps = (state) => {
   return { articles: state };
 };
 
+
 class Data extends React.Component {
 
 
@@ -110,6 +111,7 @@ constructor(props) {
         keyExtractor={(item, index) => index}
         style={styles.listView}
         contentContainerStyle={{paddingBottom:120}}
+        windowSize={6}
       />
       </View>
 
