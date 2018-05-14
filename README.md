@@ -220,6 +220,6 @@ If you're not able to scan the QR code, make sure your phone's camera is focusin
 
 If this causes problems for you, you may want to try changing your terminal's color theme to have more contrast, or running Create React Native App from a different terminal. You can also manually enter the URL printed by the packager script in the Expo app's search bar to load it manually.
 =======
-# DayOf
-The IOS/Android day of apps
+# TigerBites
+The IOS/Android TigerBites food app
 >>>>>>> 82ee124473f47d58c940a7b6adf0d039d4d4742e

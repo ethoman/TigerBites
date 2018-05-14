@@ -1,27 +1,13 @@
-export const setVisibilityFilter = (filter) => {
+export const toggleItem = (id) => {
   return {
-    type: 'SET_VISIBILITY_FILTER',
-    filter
-  }
-}
-
-export const toggleTodo = (id) => {
-  return {
-    type: 'TOGGLE_TODO',
+    type: 'TOGGLE_ITEM',
     id
   }
 }
 
-export const filterTodo = (id) => {
+export const addItem = (id) => {
   return {
-    type: 'FILTER_TODO',
-    id
-  }
-}
-
-export const addTodo = (id) => {
-  return {
-    type: 'ADD_TODO',
+    type: 'ADD_ITEM',
     id
   }
 }

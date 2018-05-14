@@ -2,7 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import store from "./src/js/store/index.js";
 import Parent from "./src/js/components/Parent.js";
-import { addTodo } from './src/js/actions/index.js'
+import { addItem } from './src/js/actions/index.js'
 import { Icon } from 'react-native-elements';
 import {ActivityIndicator, Text, StyleSheet, View, Dimensions, StatusBar, Platform, Image, AsyncStorage } from 'react-native';
 
@@ -53,9 +53,8 @@ class AppSource extends React.Component {
                   row: i,
                   button: this.state.agenda[responseData[i].item_name],
               });
-              store.dispatch(addTodo(buttons[i]));
+              store.dispatch(addItem(buttons[i]));
             }
-        this.wait(2000);
         this.setState({
           loaded: true,
         });
@@ -65,21 +64,12 @@ class AppSource extends React.Component {
     fetch(menuURL)
       .then((response) => response.json())
       .then((responseData) => {
-        //console.log(responseData);
         this.setState({
           menu: responseData
         });
       })
       .done();
   }
-
-  wait(ms){
-   var start = new Date().getTime();
-   var end = start;
-   while(end < start + ms) {
-     end = new Date().getTime();
-  }
-}
 
 render() {
       if (this.state.loaded == false) {

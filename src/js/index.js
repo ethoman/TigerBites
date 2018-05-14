@@ -16,7 +16,6 @@ class App extends React.Component {
       this.getKey();
       this.fetchMenu();
       this.fetchData();
-      //console.log(JSON.stringify(this.state.menu));
    }
 
    

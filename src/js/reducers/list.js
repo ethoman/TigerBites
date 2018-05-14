@@ -1,7 +1,6 @@
-const todo = (state, action) => {
+const food = (state, action) => {
   switch (action.type) {
-    case 'ADD_TODO':
-      //console.log(action);
+    case 'ADD_ITEM':
       return {
         key: action.id.row,
         name: action.id.item_name,
@@ -16,8 +15,7 @@ const todo = (state, action) => {
         ingredients:action.id.ingredients,
         allergens:action.id.allergens
       }
-    case 'TOGGLE_TODO':
-      //console.log(action);
+    case 'TOGGLE_ITEM':
       if (state.key !== action.id) {
         return state
       }
@@ -30,27 +28,19 @@ const todo = (state, action) => {
   }
 }
 
-const todos = (state = [], action) => {
+const foodList = (state = [], action) => {
   switch (action.type) {
-    case 'ADD_TODO':
-    //console.log(action)
+    case 'ADD_ITEM':
       return [
         ...state,
-        todo(undefined, action)
+        food(undefined, action)
       ]
-    case 'TOGGLE_TODO':
+    case 'TOGGLE_ITEM':
       return state.map(t =>
-        todo(t, action))
-    case 'FILTER_TODO':
-      return state.filter(function(item){
-         const itemData = item.name.toUpperCase()
-         const textData = action.id.toUpperCase()
-         return itemData.indexOf(textData) > -1
-       }
-      )
+        food(t, action))
     default:
       return state
   }
 }
 
-export default todos
+export default foodList

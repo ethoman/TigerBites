@@ -1,10 +1,8 @@
 import { combineReducers } from 'redux'
-import todos from './list'
-import visibilityFilter from './visibilityFilter'
+import foodList from './list'
 
 const rootReducer = combineReducers({
-  todos,
-  visibilityFilter,
+  foodList
 })
 
 export default rootReducer

@@ -22,7 +22,7 @@ constructor(props) {
 
     this.state = {
       text: '',
-      dataSource: props.articles.todos,
+      dataSource: props.articles.foodList,
       selection: 'All',
       picture: require('./filter.png')
     }
@@ -99,7 +99,7 @@ constructor(props) {
       </View>
       <FlatList
         ref="listRef"
-        data={this.props.articles.todos.filter(function(item){
+        data={this.props.articles.foodList.filter(function(item){
          const itemData = item.name.toUpperCase()
          const textData = this.state.text.toUpperCase()
 
@@ -120,7 +120,7 @@ constructor(props) {
   else
     return (
       <FlatList
-        data={this.props.articles.todos.filter(({ button }) => button !== false)}
+        data={this.props.articles.foodList.filter(({ button }) => button !== false)}
         renderItem={({item}) => this.renderRow(item)}
         keyExtractor={(item, index) => item.key}
         style={styles.listView}

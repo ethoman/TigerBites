@@ -1,13 +1,13 @@
-import React, { PureComponent } from 'react';
-import {Alert, Text, View, Button, Platform, Image, ScrollView, AsyncStorage, StyleSheet, TouchableHighlight } from 'react-native';
+import React from 'react';
+import {Text, View, Button, Platform, Image, ScrollView, AsyncStorage, StyleSheet, TouchableHighlight } from 'react-native';
 import { Notifications, Permissions } from 'expo';
 import {StackNavigator, withNavigation, NavigationActions} from 'react-navigation';
-import { toggleTodo } from '../actions/index.js';
+import { toggleItem } from '../actions/index.js';
 import { connect } from 'react-redux';
 
 const PUSH_ENDPOINT = 'http://vast-chamber-81818.herokuapp.com/notifications/token';
 
-// taken from expo website
+// taken from expo website https://docs.expo.io/versions/latest/guides/push-notifications
 async function registerForPushNotificationsAsync(data) {
   const { status: existingStatus } = await Permissions.getAsync(
     Permissions.NOTIFICATIONS
@@ -52,7 +52,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onTodoClick: (id) => {
-      dispatch(toggleTodo(id.key))
+      dispatch(toggleItem(id.key))
     }
   }
 }

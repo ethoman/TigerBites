@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import {ActivityIndicator, AsyncStorage, Text, View, List, ListItem, Button, StyleSheet, Dimensions, StatusBar, Platform, Image, ScrollView, ListView, TouchableOpacity, FlatList} from 'react-native';
 import { TabNavigator, StackNavigator, DrawerNavigator, NavigationActions} from 'react-navigation';
 import { connect } from "react-redux";
-import { toggleTodo } from '../actions/index.js';
 import Events from './events.js';
-import { Notifications, Permissions } from 'expo';
 
 
 const mapStateToProps = (state) => {
@@ -56,8 +54,8 @@ class Menu extends React.Component {
     if (array === undefined) return;
     else return Object.values(array).map(item => 
       {
-        var picture = this.picture(this.props.articles.todos[item].type);
-        return <Events pic={picture} key={item} rowData={this.props.articles.todos[item]}/>
+        var picture = this.picture(this.props.articles.foodList[item].type);
+        return <Events pic={picture} key={item} rowData={this.props.articles.foodList[item]}/>
       });
   }
 
@@ -75,11 +73,11 @@ class Menu extends React.Component {
   }
   render () {
     return(
-
-        <ScrollView>
+        <View>
         <View style={{position: 'absolute', top: 20, left: 0, right: 0, bottom: 0, alignItems: 'center'}}>
         <Text>No Food to Display!</Text>
         </View>
+        <ScrollView>
         {this.renderMenu(this.props['-- Main Entree --'], <Text>Main Entrée</Text>)}
         {this.renderMenu(this.props['-- Entrees --'], <Text>Entrées</Text>)}
         {this.renderMenu(this.props['-- Vegetarian & Vegan Entree --'], <Text>Vegetarian & Vegan Entrée</Text>)}
@@ -102,9 +100,8 @@ class Menu extends React.Component {
         {this.renderMenu(this.props['-- Specialty Bars --'], <Text>Specialty Bars</Text>)}
         {this.renderMenu(this.props['-- Breakfast Bars --'], <Text>Breakfast Bars</Text>)}
         {this.renderMenu(this.props['-- Desserts --'], <Text>Desserts</Text>)}
-
         </ScrollView>
-
+        </View>
     );
 }
 }
